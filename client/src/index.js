@@ -8,11 +8,6 @@ import createBrowserHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
 import App from './components/app';
-import Signin from './components/auth/signin';
-import Signout from './components/auth/signout';
-import Signup from './components/auth/signup';
-import Feature from './components/feature';
-import RequireAuth from './components/require_authentication';
 import reducers from './reducers'
 
 const history = createBrowserHistory();
@@ -21,12 +16,7 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk, routerMiddleware(h
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <ConnectedRouter history={history}>
-      <App>
-        <Route path="/signin" component={Signin} />
-        <Route path="/signout" component={RequireAuth(Signout)} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/feature" component={RequireAuth(Feature)} />
-      </App>
+      <Route path="/" component={App} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
