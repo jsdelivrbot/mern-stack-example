@@ -4,9 +4,12 @@ import { push } from 'react-router-redux';
 import {
   AUTH_USER,
   UNAUTH_USER,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FETCH_MESSAGE
 } from './types';
 const ROOT_URL = 'http://localhost:3090';
+
+// TODO: split to multiple action creators;
 
 function signupUser({ email, password }) {
   return dispatch => {
@@ -31,6 +34,7 @@ function signinUser({email, password}) {
         // - Update state to indicate is authenticated
         dispatch({ type: AUTH_USER });
         // - Save the JWT token
+        // TODO: Think about automatical destroying of a token.
         localStorage.setItem('token', response.data.token);
         // - Redirect to the route '/feature'
         dispatch(push('/feature'));
@@ -56,7 +60,22 @@ function authError(error) {
   };
 }
 
+function fetchMessage() {
+  return dispatch => {
+    axios.get(ROOT_URL, {
+      headers: { authorization: localStorage.getItem('token') }
+    })
+      .then(response => {
+        dispatch({
+          type: FETCH_MESSAGE,
+          payload: response.data
+        })
+      });
+  }
+}
+
 export {
+  fetchMessage,
   signupUser,
   signinUser,
   signoutUser,

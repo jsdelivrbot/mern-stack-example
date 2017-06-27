@@ -46,6 +46,8 @@ class Signup extends Component {
 }
 
 function validate(formProps) {
+  // TODO: improve validation
+
   const errors = {};
 
   if (!formProps.email) {
