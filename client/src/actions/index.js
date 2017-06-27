@@ -1,6 +1,6 @@
 import axios from 'axios';
-import createHistory from 'history/createBrowserHistory';
-const history = createHistory();
+import { push } from 'react-router-redux';
+
 import {
   AUTH_USER,
   UNAUTH_USER,
@@ -14,7 +14,7 @@ function signupUser({ email, password }) {
       .then(response => {
         dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
-        history.push('/feature');
+        dispatch(push('/feature'));
       })
       .catch(error => {
         dispatch(authError(error.response.data.error));
@@ -33,7 +33,7 @@ function signinUser({email, password}) {
         // - Save the JWT token
         localStorage.setItem('token', response.data.token);
         // - Redirect to the route '/feature'
-        history.push('/feature');
+        dispatch(push('/feature'));
       })
       .catch(() => {
         // If request is bad...
