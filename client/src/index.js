@@ -12,6 +12,7 @@ import Signin from './components/auth/signin';
 import Signout from './components/auth/signout';
 import Signup from './components/auth/signup';
 import Feature from './components/feature';
+import RequireAuth from './components/require_authentication';
 import reducers from './reducers'
 
 const history = createBrowserHistory();
@@ -22,9 +23,9 @@ ReactDOM.render(
     <ConnectedRouter history={history}>
       <App>
         <Route path="/signin" component={Signin} />
-        <Route path="/signout" component={Signout} />
+        <Route path="/signout" component={RequireAuth(Signout)} />
         <Route path="/signup" component={Signup} />
-        <Route path="/feature" component={Feature} />
+        <Route path="/feature" component={RequireAuth(Feature)} />
       </App>
     </ConnectedRouter>
   </Provider>,
